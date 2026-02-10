@@ -1,0 +1,15 @@
+-- Definição da tabela de utilizadores
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, -- Identificador único
+    username TEXT UNIQUE NOT NULL,        -- Nome de utilizador (não pode repetir)
+    senha_hash TEXT NOT NULL,             -- Hash da senha (nunca guardar texto plano)
+    salt TEXT NOT NULL                    -- Sal aleatório para proteção contra Rainbow Tables
+);
+
+-- Índice para otimizar a performance de login
+CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_username ON usuarios(username);
+
+/* DICA DE SEGURANÇA: 
+O campo 'salt' deve ser único para cada utilizador e gerado aleatoriamente
+no momento do cadastro ou alteração de senha. 
+*/
